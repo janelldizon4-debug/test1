@@ -1,21 +1,4 @@
-
 const REGISTERED_KEYS = [
-  {
-    name: "Cris",
-    accessKey: "CRIS-2026-KING",
-    expires: "2026-12-31",
-    revoked: false
-  },
-  {
-    name: "Janell",
-    accessKey: "JANELL-EXPIRED",
-    expires: "2025-01-01",
-    revoked: false
-  },
-  {
-    name: "BannedUser",
-    accessKey: "BANNED-KEY",
-    expires: "2026-05-01",
-    revoked: true
-  }
+{ accessKey: "Cris-rank-2025", name: "CrisUser1", subscription: "1 Month", revoked:false, expires:"2026-02-28" },
+{ accessKey: "Cris-rank-2026", name: "CrisUser2", subscription: "Infinite", revoked:false, expires:"2099-12-31" }
 ];
