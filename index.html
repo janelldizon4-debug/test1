@@ -285,28 +285,6 @@ button.glass-button:hover {
 </head>
 <body>
 
-
-<div style="
-position:fixed;
-bottom:70px;
-left:50%;
-transform:translateX(-50%);
-z-index:1000000;
-">
-    
-<button id="siteToggleBtn"
-    class="owner-toggle"
-    onclick="toggleSiteWithPassword()">
-    🔴 SITE OFF
-</button>
-</div>
-
-
-<div id="siteOffScreen">
-    ❌ Website is currently OFF<br><br>
-    👉 Ask the owner to turn ON the website
-</div>
-
 <div class="logo-wrapper" style="text-align:center; margin-bottom:10px;">
     <img src="https://i.ibb.co/QjzpnFyL/Picsart-25-10-06-22-05-54-728.png" 
          alt="Logo" 
@@ -371,42 +349,6 @@ z-index:1000000;
 <script src="key.js"></script>
 <script>
 
-const OWNER_PASSWORD = "crisOWNER123"; // 🔁 CHANGE THIS
-let SITE_ENABLED = true;
-
-function applySiteState(){
-    const off = document.getElementById("siteOffScreen");
-    const access = document.getElementById("accessWrapper");
-    const main = document.getElementById("mainContent");
-
-    if(SITE_ENABLED){
-        off.style.display="none";
-        access.style.display="block";
-    }else{
-        off.style.display="flex";
-        access.style.display="none";
-        main.style.display="none";
-    }
-}
-
-function toggleSiteWithPassword(){
-    const pass = prompt("Enter OWNER password:");
-    if(pass !== OWNER_PASSWORD){
-        alert("❌ Wrong password!");
-        return;
-    }
-
-    SITE_ENABLED = !SITE_ENABLED;
-
-    const btn = document.getElementById("siteToggleBtn");
-    btn.innerHTML = SITE_ENABLED ? "🟢 SITE ON" : "🔴 SITE OFF";
-btn.classList.toggle("on", SITE_ENABLED);
-
-    applySiteState();
-}
-
-window.addEventListener("load", applySiteState);
-
 const USERS = [
   { accessKey: "Cris-rank-2025", username: "CrisUser1", telegramId: "6784382795", balance: 1000 },
   { accessKey: "Cris-rank-2026", username: "CrisUser2", telegramId: "987654321", balance: 1000 }
@@ -417,7 +359,6 @@ function checkAccessKeyCustom() {
     const status = document.getElementById("accessStatus");
     const now = new Date();
 
-    
     const user = REGISTERED_KEYS.find(u => u.accessKey === inputKey);
 
     if (!user) {
@@ -436,21 +377,17 @@ function checkAccessKeyCustom() {
         return;
     }
 
-
     window.currentUserName = user.name;
     window.currentUserKey = user.accessKey;
 
-   
     document.getElementById("accessWrapper").style.display = "none";
     document.getElementById("mainContent").style.display = "block";
 
-    
     const welcomeDiv = document.getElementById("welcomeUser");
     if (welcomeDiv) welcomeDiv.textContent = "Welcome, " + user.name;
 
-   
     const subDiv = document.getElementById("subscriptionInfo");
-    if (subDiv) subDiv.textContent = "Subscription: " + user.subscription; // e.g., "1 Month" or "Infinite"
+    if (subDiv) subDiv.textContent = "Subscription: " + user.subscription;
 
     console.log("Access granted:", user.name);
 }
