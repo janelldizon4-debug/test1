@@ -327,6 +327,8 @@ z-index:1000000;
   <div class="center-wrapper">
     <div class="container">
       <h1>Cris Gaming</h1>
+      
+      <div id="welcomeUser" style="color:#0f0; margin-bottom:10px; font-weight:bold;"></div>
 
       <!-- Game Select -->
    <div id="gameSelectWrapper">
@@ -357,7 +359,9 @@ z-index:1000000;
 </div>
 
    <footer>© 2026 Cris Gaming. All Rights Reserved.</footer>
+<script src="key.js"></script>
 <script>
+
 const OWNER_PASSWORD = "crisOWNER123"; // 🔁 CHANGE THIS
 let SITE_ENABLED = true;
 
@@ -400,36 +404,41 @@ const USERS = [
 ];
 
 function checkAccessKeyCustom() {
+    const inputKey = document.getElementById("accessInput").value.trim();
+    const status = document.getElementById("accessStatus");
+    const now = new Date();
 
-    
-    if (typeof SITE_ENABLED !== "undefined" && !SITE_ENABLED) {
-        document.getElementById("siteOffScreen").style.display = "flex";
+    // Hanapin ang user sa REGISTERED_KEYS
+    const user = REGISTERED_KEYS.find(u => u.accessKey === inputKey);
+
+    if (!user) {
+        status.textContent = "❌ Invalid Access Key!";
         return;
     }
-   
 
-    const key = document.getElementById('accessInput').value.trim();
-    const status = document.getElementById('accessStatus');
-
-    // Find matching user
-    const user = USERS.find(u => u.accessKey === key);
-
-    if (user) {
-        // Store username & Telegram ID for later
-        window.currentUserAccess = user.username;
-        window.currentUserTelegram = user.telegramId;
-
-        document.getElementById('accessWrapper').style.display = 'none';
-        document.getElementById('mainContent').style.display = 'block';
-
-        status.textContent = "";
-        console.log("Access granted for:", user.username, "Telegram ID:", user.telegramId);
-    } else {
-        status.textContent = "❌ Invalid Access Key!";
-        status.style.color = "#f55";
-        document.getElementById('accessInput').value = "";
-        document.getElementById('accessInput').focus();
+    if (user.revoked) {
+        status.textContent = "🚫 Key revoked. Ask owner for new key.";
+        return;
     }
+
+    const expiryDate = new Date(user.expires);
+    if (now > expiryDate) {
+        status.textContent = "⏰ Key expired. Please renew.";
+        return;
+    }
+
+    // ✅ ACCESS GRANTED
+    window.currentUserName = user.name;
+    window.currentUserKey = user.accessKey;
+
+    document.getElementById("accessWrapper").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
+
+    // Optional: show name sa UI
+    const welcomeDiv = document.getElementById("welcomeUser");
+    if(welcomeDiv) welcomeDiv.textContent = "Welcome, " + user.name;
+
+    console.log("Access granted:", user.name);
 }
 // Press ENTER to submit
 document.getElementById('accessInput').addEventListener('keypress', function(e) {
