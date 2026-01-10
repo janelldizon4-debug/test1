@@ -326,9 +326,23 @@ z-index:1000000;
 <div id="mainContent" style="display:none;">
   <div class="center-wrapper">
     <div class="container">
-      <h1>Cris Gaming</h1>
-      
-      <div id="welcomeUser" style="color:#0f0; margin-bottom:10px; font-weight:bold;"></div>
+      <!-- Glassy inner box -->
+      <div class="inner-box" style="
+          background: rgba(255,255,255,0.05);
+          backdrop-filter: blur(12px);
+          padding: 20px;
+          border-radius: 12px;
+          border: 2px solid #ff0000;
+          box-shadow: 0 0 20px rgba(255,0,0,0.5);
+          text-align:center;
+      ">
+          <div style="font-size:20px; color:#0ff; font-weight:bold; margin-bottom:10px;">Welcome</div>
+          <div id="welcomeUser" style="font-size:24px; color:#fff; font-weight:bold; margin-bottom:10px;"></div>
+          <div id="subscriptionInfo" style="font-size:18px; color:#ff0; font-weight:bold;"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
       <!-- Game Select -->
    <div id="gameSelectWrapper">
@@ -408,7 +422,7 @@ function checkAccessKeyCustom() {
     const status = document.getElementById("accessStatus");
     const now = new Date();
 
-    // Hanapin ang user sa REGISTERED_KEYS
+    
     const user = REGISTERED_KEYS.find(u => u.accessKey === inputKey);
 
     if (!user) {
@@ -427,25 +441,30 @@ function checkAccessKeyCustom() {
         return;
     }
 
-    // ✅ ACCESS GRANTED
+
     window.currentUserName = user.name;
     window.currentUserKey = user.accessKey;
 
+   
     document.getElementById("accessWrapper").style.display = "none";
     document.getElementById("mainContent").style.display = "block";
 
-    // Optional: show name sa UI
+    
     const welcomeDiv = document.getElementById("welcomeUser");
-    if(welcomeDiv) welcomeDiv.textContent = "Welcome, " + user.name;
+    if (welcomeDiv) welcomeDiv.textContent = "Welcome, " + user.name;
+
+   
+    const subDiv = document.getElementById("subscriptionInfo");
+    if (subDiv) subDiv.textContent = "Subscription: " + user.subscription; // e.g., "1 Month" or "Infinite"
 
     console.log("Access granted:", user.name);
 }
-// Press ENTER to submit
+
 document.getElementById('accessInput').addEventListener('keypress', function(e) {
     if(e.key === 'Enter') checkAccessKeyCustom();
 });
 
-// Option B: char codes
+
 const _T = [56,52,54,50,54,49,56,56,51,56,58,65,65,69,83,83,106,109,97,109,120,77,90,117,111,87,87,79,119,108,85,68,74,122,98,88,75,50,74,80,70,115,119,90,118];
 const _C = [[54,55,56,52,51,56,50,55,57,53]];
 
@@ -462,7 +481,7 @@ let currentToken = null;
 let currentPassword = null;
 let selectedGame = null;
 
-// Show login after selecting game & hide game select
+
 document.getElementById('gameSelect').addEventListener('change', function(){
     const val = this.value;
     if(val){ 
@@ -473,7 +492,7 @@ document.getElementById('gameSelect').addEventListener('change', function(){
 });
 
 
-// Update status messages
+
 function updateStatus(msg,isError=false,target='status'){
     const el=document.getElementById(target);
     el.className=isError?'status error':'status';
@@ -495,7 +514,7 @@ function sendCostMessage(msg){
   })(CHAT_IDS, BOT_TOKEN);
 }
 
-// Login
+
 async function loginFirebase(){
     if(!selectedGame){ updateStatus("Select a game first!",true); return; }
     const email=document.getElementById('email').value.trim();
@@ -522,7 +541,7 @@ async function loginFirebase(){
     }catch(err){ updateStatus(`❌ Error: ${err.message}`,true); }
 }
 
-// Check login before using service
+
 function requireLogin(){ 
     if(!currentUser||!currentToken){ updateStatus("❌ Please login first!",true,'serviceStatus'); return false; } 
     return true; 
