@@ -197,11 +197,12 @@ button.glass-button:hover {
 }
 
 .king-rank-title {
-    font-size: 40px;
+    font-size: 30px;
+    top: 20px
     font-weight: bold;
     text-align: center;
     font-family: 'Orbitron', sans-serif; 
-    margin: 20px 0;
+    margin: 5px 0;
     background: linear-gradient(270deg, #ff0000, #ff8800, #00aaff, #8a2be2);
     background-size: 600% 600%;
     -webkit-background-clip: text;
@@ -282,6 +283,18 @@ button.glass-button:hover {
     border-color: #00aaff;
     box-shadow: 0 0 30px rgba(0,170,255,1);
 }
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.info-line {
+  color: #e0faff;
+  font-weight: 500;
+}
 </style>
 </head>
 <body>
@@ -315,8 +328,11 @@ button.glass-button:hover {
           text-align:center;
       ">
           
-          <div id="welcomeUser" style="font-size:20px; color:#0ff; font-weight:bold; margin-bottom:8px;"></div>
-          <div id="subscriptionInfo" style="font-size:16px; color:#ff0; font-weight:bold; margin-bottom:12px;"></div>
+          <div class="user-info">
+  <div class="info-line">🌐 Welcome</div>
+  <div class="info-line">🌐 <span id="welcomeUser"></span></div>
+  <div class="info-line">🌐 <span id="subscriptionInfo"></span></div>
+</div>
           
       <!-- Game Select -->
    <div id="gameSelectWrapper">
